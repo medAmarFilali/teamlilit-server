@@ -5,7 +5,7 @@ const User = require("../models/user");
 const { cookieExtractor } = require("../helpers/helpers");
 
 passport.use(
-  newJwtStrategy(
+  new JwtStrategy(
     {
       jwtFromRequest: cookieExtractor,
       secretOrKey: "outeheaven",
@@ -26,7 +26,7 @@ passport.use(
 );
 
 passport.use(
-  new LocalStrategy({ usernameField: email }, (username, password, done) => {
+  new LocalStrategy({ usernameField: "email" }, (username, password, done) => {
     User.findOne({ username }, (err, user) => {
       if (err) {
         return done(err);

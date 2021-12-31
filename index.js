@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/user", userRouter);
 
 mongoose
   .connect(process.env.DB_CONNECTION_URL, {
