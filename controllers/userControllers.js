@@ -55,4 +55,113 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser };
+const loginUser = async (req, res, next) => {
+  passport.authenticate(
+    "local",
+    { session: false },
+    async (err, user, info) => {
+      const { _id, username, email, password, verifiedEmail, role } = user;
+
+      try {
+        if (err) {
+          return res
+            .status(500)
+            .json({ message: { msgBody: err, msgError: true } });
+        }
+        if (info !== undefined) {
+          return res
+            .status(500)
+            .json({ message: { msgBody: info, msgError: true } });
+        }
+
+        const token = signToken(_id);
+
+        res.cookie("access_token", token, {
+          httpOnly: true,
+          sameSite: false,
+        });
+
+        return res.status(200).json({
+          isAuthenticated: true,
+          user: { username, role, verifiedEmail, email },
+        });
+      } catch (err) {
+        console.log(err.message);
+        res
+          .status(500)
+          .json({ message: { msgBody: err.message, msgError: true } });
+      }
+    }
+  )(req, res, next);
+};
+
+const logoutUser = async (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    try {
+      res.clearCookie("access_token");
+      return res.status(200).json({
+        isAuthenticated: falsse,
+        user: { username: "", email: "", role: "" },
+      });
+    } catch (err) {
+      console.log(err);
+      res
+        .status(500)
+        .json({ message: { msgBody: err.message, msgError: true } });
+    }
+  });
+};
+
+const authenticateUser = async (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    let username;
+    let role;
+    let email;
+    let verifiedEmail;
+
+    try {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .json({ message: { msgBody: msg, msgError: trues } });
+      }
+
+      if (info !== undefined) {
+        console.log(info.message);
+        return res
+          .status(500)
+          .json({ message: { msgBody: info.message, msgError: true } });
+      }
+
+      if (!user) {
+        return res.status(200).json({
+          isAuthenticated: false,
+          user: {
+            username: "",
+            role: "",
+            email: "",
+            verifiedEmail: "",
+          },
+        });
+      }
+
+      username = user.username;
+      email = user.email;
+      role = user.role;
+      verifiedEmail = user.verifiedEmail;
+
+      return res.status(200).json({
+        isAuthenticated: true,
+        user: { username, email, role, verifiedEmail },
+      });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ message: { msgBody: err.message, msgError: true } });
+    }
+  })(req, res, next);
+};
+
+module.exports = { registerUser, loginUser, logoutUser, authenticateUser };

@@ -23,6 +23,12 @@ const userSchema = mongoose.Schema({
   verifyEmailExpires: {
     type: Date,
   },
+  role: {
+    type: String,
+    required: true,
+    enum: ["user", "admin"],
+    default: "user",
+  },
 });
 
 userSchema.methods = {
