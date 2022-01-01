@@ -104,7 +104,7 @@ const logoutUser = async (req, res, next) => {
     try {
       res.clearCookie("access_token");
       return res.status(200).json({
-        isAuthenticated: falsse,
+        isAuthenticated: false,
         user: { username: "", email: "", role: "" },
       });
     } catch (err) {
@@ -113,7 +113,7 @@ const logoutUser = async (req, res, next) => {
         .status(500)
         .json({ message: { msgBody: err.message, msgError: true } });
     }
-  });
+  })(req, res, next);
 };
 
 const authenticateUser = async (req, res, next) => {
