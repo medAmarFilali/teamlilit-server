@@ -26,13 +26,13 @@ passport.use(
 );
 
 passport.use(
-  new LocalStrategy({ usernameField: "email" }, (username, password, done) => {
-    User.findOne({ username }, (err, user) => {
+  new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
+    User.findOne({ email }, (err, user) => {
       if (err) {
         return done(err);
       }
       if (!user) {
-        return done(null, false, "Please check your username");
+        return done(null, false, "Please check your email");
       }
       user.checkPassword(password, done);
     });
