@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken");
 
 const signToken = (userID) => {
-  return JWT.sign(
+  const signedToken = JWT.sign(
     {
       iss: "outerheaven",
       sub: userID,
@@ -9,6 +9,7 @@ const signToken = (userID) => {
     "outerheaven",
     { expiresIn: "24h" }
   );
+  return signedToken;
 };
 
 const cookieExtractor = (req) => {

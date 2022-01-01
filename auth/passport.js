@@ -8,12 +8,11 @@ passport.use(
   new JwtStrategy(
     {
       jwtFromRequest: cookieExtractor,
-      secretOrKey: "outeheaven",
+      secretOrKey: "outerheaven",
     },
     (payload, done) => {
-      User.dingById({ _id: payload.sub }, (err, user) => {
+      User.findById({ _id: payload.sub }, (err, user) => {
         if (err) {
-          console.log(err);
           return done(err, false);
         } else if (user) {
           return done(null, user);
