@@ -10,8 +10,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "You need to enter a password"],
   },
-  name: String,
-  displayName: String,
+  username: String,
   verifiedEmail: {
     type: Boolean,
     required: true,
@@ -54,7 +53,7 @@ userSchema.pre("save", function (next) {
     console.log("Password not found [model.pre]");
     next();
   } else {
-    this.password = this.hashpassword(this.password);
+    this.password = this.hashPassword(this.password);
     next();
   }
 });

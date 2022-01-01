@@ -31,7 +31,7 @@ const registerUser = async (req, res, next) => {
       });
     }
 
-    if (password !== cpasssword) {
+    if (password !== cpassword) {
       return res.status(409).json({
         message: {
           msgBody: "Passwords doesn't match",
@@ -45,13 +45,17 @@ const registerUser = async (req, res, next) => {
     await user.save();
 
     return res.status(200).json({
-      message: {
-        msgBody: `User ${user.username} successfully added`,
-        msgError: false,
+      isAuthenticated: true,
+      user: {
+        username: user.username,
+        verifiedEmail: user.verifiedEmail,
+        email: user.email,
+        role: user.role,
       },
     });
   } catch (err) {
-    res.status(500).json({ message: { msgBody: err, msgError: true } });
+    console.log(err.message);
+    res.status(500).json({ message: { msgBody: err.message, msgError: true } });
   }
 };
 
