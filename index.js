@@ -53,13 +53,15 @@ io.on("connection", (socket) => {
   });
 });
 
+const port = process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.DB_CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(
-    server.listen(process.env.APP_PORT, () => {
+    server.listen(port, () => {
       console.log(`Listening to http://localhost:${process.env.APP_PORT}`);
     })
   )
