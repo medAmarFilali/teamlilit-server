@@ -13,6 +13,7 @@ const io = require("socket.io")(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
+    allowEIO3: true,
     // allowHeaders: ["Access-Control-Allow-Origin"],
     // credentials: true,
   },
@@ -36,6 +37,8 @@ app.use("/user", userRouter);
 
 io.on("connection", (socket) => {
   socket.emit("me", socket.id);
+
+  // console.log("Socket io connected");
 
   socket.on("disconnect", () => {
     socket.broadcast.emit("callEnded");
