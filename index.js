@@ -18,6 +18,8 @@ const io = require("socket.io")(server, {
   },
 });
 
+app.set("transports", ["websocket", "flashsocket", "polling"]);
+
 const userRouter = require("./routes/userRouter");
 
 app.use(morgan("dev"));
