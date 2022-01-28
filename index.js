@@ -11,7 +11,7 @@ const server = http.createServer(app);
 dotenv.config();
 const io = require("socket.io")(server, {
   cors: {
-    origin: [process.env.CLIENT_URL],
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
     allowHeaders: ["Access-Control-Allow-Origin"],
     credentials: true,
