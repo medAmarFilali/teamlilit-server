@@ -14,7 +14,7 @@ const io = require("socket.io")(server, {
     origin: "*",
     methods: ["GET", "POST"],
     allowHeaders: ["Access-Control-Allow-Origin"],
-    credentials: true,
+    // credentials: true,
   },
 });
 
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "*",
-    credentials: true,
+    // credentials: true,
   })
 );
 app.use("/user", userRouter);
