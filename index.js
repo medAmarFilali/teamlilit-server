@@ -13,7 +13,7 @@ const io = require("socket.io")(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-    allowHeaders: ["Access-Control-Allow-Origin"],
+    // allowHeaders: ["Access-Control-Allow-Origin"],
     // credentials: true,
   },
 });
