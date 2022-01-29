@@ -66,6 +66,8 @@ const loginUser = async (req, res, next) => {
     async (err, user, info) => {
       const { _id, username, email, password, verifiedEmail, role } = user;
 
+      console.log("Trying to log in....", email);
+
       try {
         if (err) {
           return res
@@ -90,7 +92,7 @@ const loginUser = async (req, res, next) => {
           user: { username, role, verifiedEmail, email },
         });
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
         res
           .status(500)
           .json({ message: { msgBody: err.message, msgError: true } });

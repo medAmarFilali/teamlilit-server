@@ -11,15 +11,14 @@ const server = http.createServer(app);
 dotenv.config();
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: [process.env.CLIENT_URL],
     methods: ["GET", "POST"],
-    allowEIO3: true,
-    // allowHeaders: ["Access-Control-Allow-Origin"],
-    // credentials: true,
+    // allowEIO3: true,
+    credentials: true,
   },
 });
 
-app.set("transports", ["websocket", "flashsocket", "polling"]);
+// app.set("transports", ["websocket", "flashsocket", "polling"]);
 
 const userRouter = require("./routes/userRouter");
 
@@ -29,16 +28,15 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
-    // credentials: true,
+    origin: [process.env.CLIENT_URL],
+    credentials: true,
   })
 );
+
 app.use("/user", userRouter);
 
 io.on("connection", (socket) => {
   socket.emit("me", socket.id);
-
-  // console.log("Socket io connected");
 
   socket.on("disconnect", () => {
     socket.broadcast.emit("callEnded");
@@ -62,7 +60,7 @@ mongoose
   })
   .then(
     server.listen(port, () => {
-      console.log(`Listening to http://localhost:${process.env.APP_PORT}`);
+      console.log(`Listening to http://localhost:${port}`);
     })
   )
   .catch((err) => console.log(err.message));
