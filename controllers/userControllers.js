@@ -66,8 +66,6 @@ const loginUser = async (req, res, next) => {
     async (err, user, info) => {
       const { _id, username, email, password, verifiedEmail, role } = user;
 
-      console.log("Trying to log in....", email);
-
       try {
         if (err) {
           return res
@@ -83,7 +81,7 @@ const loginUser = async (req, res, next) => {
         const token = signToken(_id);
 
         res.cookie("access_token", token, {
-          httpOnly: true,
+          httpOnly: false,
           sameSite: "strict",
         });
 
