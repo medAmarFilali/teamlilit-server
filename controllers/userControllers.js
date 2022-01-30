@@ -83,10 +83,10 @@ const loginUser = async (req, res, next) => {
         res.cookie("access_token", token, {
           httpOnly: true,
           sameSite: false,
-          secure: true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
         });
 
-        return res.status(200).json({
+        res.status(200).json({
           isAuthenticated: true,
           user: { username, role, verifiedEmail, email },
         });
