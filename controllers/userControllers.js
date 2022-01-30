@@ -83,7 +83,7 @@ const loginUser = async (req, res, next) => {
         const token = signToken(_id);
 
         res.cookie("access_token", token, {
-          httpOnly: true,
+          httpOnly: false,
           sameSite: false,
         });
 
