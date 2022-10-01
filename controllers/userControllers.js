@@ -67,7 +67,6 @@ const loginUser = async (req, res, next) => {
       const { _id, username, email, password, verifiedEmail, role } = user;
 
       try {
-        console.log("Logging user: ", email);
         if (err) {
           return res
             .status(500)
@@ -170,4 +169,21 @@ const authenticateUser = async (req, res, next) => {
   })(req, res, next);
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authenticateUser };
+const getAllUsers = async (req, res) => {
+  // Get all users from the database
+  try {
+    const users = await User.find();
+    console.log("Users: ", users);
+    return res.status(200).json({ users });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  authenticateUser,
+  getAllUsers,
+};
