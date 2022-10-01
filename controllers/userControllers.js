@@ -67,6 +67,7 @@ const loginUser = async (req, res, next) => {
       const { _id, username, email, password, verifiedEmail, role } = user;
 
       try {
+        console.log("Logging user: ", email);
         if (err) {
           return res
             .status(500)

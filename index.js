@@ -33,9 +33,6 @@ app.use(
   })
 );
 
-app.use("/", function () {
-  console.log("hello");
-});
 app.use("/user", userRouter);
 
 io.on("connection", (socket) => {
