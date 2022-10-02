@@ -87,7 +87,7 @@ const loginUser = async (req, res, next) => {
           httpOnly: false,
           sameSite: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
-          domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : null,
+          // domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : null,
         });
 
         res.status(200).json({
