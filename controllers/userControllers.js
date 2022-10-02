@@ -81,9 +81,9 @@ const loginUser = async (req, res, next) => {
         const token = signToken(_id);
 
         res.cookie("access_token", token, {
-          httpOnly: true,
-          sameSite: true,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          httpOnly: false,
+          sameSite: false,
+          secure: false,
         });
 
         res.status(200).json({
