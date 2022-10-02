@@ -83,11 +83,11 @@ const loginUser = async (req, res, next) => {
         res.cookie("access_token", token, {
           // expires: new Date(Date.now() + 9999999),
           httpOnly: false,
-          sameSite: false,
+          sameSite: "none",
           secure: process.env.NODE_ENV === "production" ? true : false,
-          // domain: process.env.CLIENT_DOMAIN
-          //   ? process.env.CLIENT_DOMAIN
-          //   : "localhost",
+          domain: process.env.CLIENT_DOMAIN
+            ? process.env.CLIENT_DOMAIN
+            : "localhost",
         });
 
         res.status(200).json({
