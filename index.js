@@ -11,7 +11,7 @@ const server = http.createServer(app);
 dotenv.config();
 const io = require("socket.io")(server, {
   cors: {
-    origin: "process.env.CLIENT_URL",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
     // allowEIO3: true,
     credentials: true,
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "process.env.CLIENT_URL",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
