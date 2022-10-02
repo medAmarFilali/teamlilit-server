@@ -80,14 +80,12 @@ const loginUser = async (req, res, next) => {
 
         const token = signToken(_id);
 
-        console.log("CLIENT: ", process.env.CLIENT_URL);
-
         res.cookie("access_token", token, {
           // expires: new Date(Date.now() + 9999999),
-          httpOnly: false,
-          sameSite: false,
+          httpOnly: true,
+          sameSite: "none",
           secure: process.env.NODE_ENV === "production" ? true : false,
-          // domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : null,
+          // domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : "localhost",
         });
 
         res.status(200).json({
