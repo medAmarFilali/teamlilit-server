@@ -80,14 +80,14 @@ const loginUser = async (req, res, next) => {
 
         const token = signToken(_id);
 
-        console.log("Setting Cookies!!!!!!!!!");
-
         res.cookie("access_token", token, {
           expires: new Date(Date.now() + 9999999),
           httpOnly: false,
           sameSite: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
         });
+
+        console.log("Mode: ", process.env.NODE_ENV);
 
         res.status(200).json({
           isAuthenticated: true,
