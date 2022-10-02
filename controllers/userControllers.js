@@ -80,7 +80,12 @@ const loginUser = async (req, res, next) => {
 
         const token = signToken(_id);
 
-        res.cookie("access_token", token);
+        res.cookie("access_token", token, {
+          expires: new Date(Date.now() + 9999999),
+          httpOnly: true,
+          sameSite: true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
+        });
 
         res.status(200).json({
           isAuthenticated: true,
