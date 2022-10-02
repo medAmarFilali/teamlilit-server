@@ -82,8 +82,8 @@ const loginUser = async (req, res, next) => {
 
         res.cookie("access_token", token, {
           expires: new Date(Date.now() + 9999999),
-          httpOnly: true,
-          sameSite: true,
+          httpOnly: false,
+          sameSite: false,
           secure: process.env.NODE_ENV === "production" ? true : false,
         });
 
