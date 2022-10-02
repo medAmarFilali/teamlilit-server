@@ -80,6 +80,8 @@ const loginUser = async (req, res, next) => {
 
         const token = signToken(_id);
 
+        console.log("CLIENT: ", process.env.CLIENT_URL);
+
         res.cookie("access_token", token, {
           // expires: new Date(Date.now() + 9999999),
           httpOnly: false,
