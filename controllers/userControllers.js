@@ -170,7 +170,6 @@ const authenticateUser = async (req, res, next) => {
 };
 
 const getAllUsers = async (req, res) => {
-  // Get all users from the database
   try {
     const users = await User.find();
     console.log("Users: ", users);
