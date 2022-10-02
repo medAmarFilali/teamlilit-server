@@ -82,7 +82,7 @@ const loginUser = async (req, res, next) => {
 
         res.cookie("access_token", token, {
           httpOnly: true,
-          sameSite: false,
+          sameSite: true,
           secure: process.env.NODE_ENV === "production" ? true : false,
         });
 
