@@ -84,8 +84,8 @@ const loginUser = async (req, res, next) => {
           // expires: new Date(Date.now() + 9999999),
           httpOnly: true,
           sameSite: "none",
-          secure: process.env.NODE_ENV === "production" ? false : false,
-          // domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : "localhost",
+          secure: process.env.NODE_ENV === "production" ? true : false,
+          domain: process.env.CLIENT_URL ? process.env.CLIENT_URL : "localhost",
         });
 
         res.status(200).json({
