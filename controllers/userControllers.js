@@ -81,6 +81,7 @@ const loginUser = async (req, res, next) => {
         const token = signToken(_id);
 
         console.log("***ENV***: ", process.env.NODE_ENV);
+        console.log("***DOMAIN***: ", process.env.CLIENT_DOMAIN);
 
         res.cookie("access_token", token, {
           // expires: new Date(Date.now() + 9999999),
