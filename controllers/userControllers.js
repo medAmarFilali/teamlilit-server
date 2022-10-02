@@ -84,7 +84,7 @@ const loginUser = async (req, res, next) => {
           expires: new Date(Date.now() + 9999999),
           httpOnly: false,
           sameSite: false,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          secure: true,
         });
 
         res.status(200).json({
