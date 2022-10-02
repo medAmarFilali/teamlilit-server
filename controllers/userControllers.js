@@ -170,6 +170,7 @@ const authenticateUser = async (req, res, next) => {
 };
 
 const getAllUsers = async (req, res) => {
+  // Testing heroku
   try {
     const users = await User.find();
     console.log("Users: ", users);
