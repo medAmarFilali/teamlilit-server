@@ -14,8 +14,10 @@ const signToken = (userID) => {
 
 const cookieExtractor = (req) => {
   let token = null;
-  if (req && req.cookies) {
+  if (req.cookies && req.body.token === undefined) {
     token = req.cookies["access_token"];
+  } else if (req.body) {
+    token = req.body.token;
   }
   return token;
 };
