@@ -207,15 +207,13 @@ const updateUserInfo = async (req, res, next) => {
           .json({ message: { msgBody: info.message, msgError: true } });
       }
 
-      await User.findOneAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         { familyName, givenName },
         { new: true }
-      );
+      ).select("username email role verifiedEmail familyName givenName");
 
-      res
-        .status(200)
-        .json({ message: { msgBody: "User info updated", msgError: false } });
+      res.status(200).json({ profileInfo: updatedUser });
     } catch (err) {
       console.log("err", err);
       res
