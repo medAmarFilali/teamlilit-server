@@ -134,11 +134,10 @@ const authenticateUser = async (req, res, next) => {
         console.log(err);
         return res
           .status(500)
-          .json({ message: { msgBody: msg, msgError: trues } });
+          .json({ message: { msgBody: msg, msgError: true } });
       }
 
       if (info !== undefined) {
-        console.log(info.message);
         return res
           .status(500)
           .json({ message: { msgBody: info.message, msgError: true } });
@@ -174,15 +173,56 @@ const authenticateUser = async (req, res, next) => {
   })(req, res, next);
 };
 
-const getAllUsers = async (req, res) => {
-  // Testing heroku
-  try {
-    const users = await User.find();
-    console.log("Users: ", users);
-    return res.status(200).json({ users });
-  } catch (err) {
-    console.log("Error: ", err);
-  }
+const getUserInfo = async (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, async (err, user, info) => {
+    try {
+      const profileInfo = await User.findOne({ _id: user._id }).select(
+        "username email role verifiedEmail familyName givenName"
+      );
+
+      res.status(200).json({
+        profileInfo,
+      });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: { msgBody: err.message, msgError: true } });
+    }
+  })(req, res, next);
+};
+
+const updateUserInfo = async (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, async (err, user, info) => {
+    const { familyName, givenName } = req.body;
+
+    try {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ message: { msgBody: err, msgError: true } });
+      }
+
+      if (info !== undefined) {
+        return res
+          .status(500)
+          .json({ message: { msgBody: info.message, msgError: true } });
+      }
+
+      await User.findOneAndUpdate(
+        { _id: user._id },
+        { familyName, givenName },
+        { new: true }
+      );
+
+      res
+        .status(200)
+        .json({ message: { msgBody: "User info updated", msgError: false } });
+    } catch (err) {
+      console.log("err", err);
+      res
+        .status(500)
+        .json({ message: { msgBody: err.message, msgError: true } });
+    }
+  })(req, res, next);
 };
 
 module.exports = {
@@ -190,5 +230,6 @@ module.exports = {
   loginUser,
   logoutUser,
   authenticateUser,
-  getAllUsers,
+  updateUserInfo,
+  getUserInfo,
 };

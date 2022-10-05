@@ -11,6 +11,8 @@ const userSchema = mongoose.Schema({
     required: [true, "You need to enter a password"],
   },
   username: String,
+  familyName: String,
+  givenName: String,
   verifiedEmail: {
     type: Boolean,
     required: true,
