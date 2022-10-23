@@ -139,7 +139,7 @@ const authenticateUser = async (req, res, next) => {
 
       if (info !== undefined) {
         return res
-          .status(500)
+          .status(200)
           .json({ message: { msgBody: info.message, msgError: true } });
       }
 
